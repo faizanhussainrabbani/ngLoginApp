@@ -3,11 +3,14 @@ import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTT
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 
-// array in local storage for registered users
-const users = JSON.parse(localStorage.getItem('users')) || [];
+
+let users = JSON.parse(localStorage.getItem('users')) || [];
+
+const reviews = JSON.parse(localStorage.getItem('reviews')) || [];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
+
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const { url, method, headers, body } = request;
 
@@ -24,6 +27,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return authenticate();
                 case url.endsWith('/users/register') && method === 'POST':
                     return register();
+                case url.endsWith('/users') && method === 'GET':
+                    return getUsers();
+                case url.match(/\/users\/\d+$/) && method === 'DELETE':
+                    return deleteUser();
+                case url.endsWith('/reviews') && method === 'GET':
+                    return getReviews();
+                case url.endsWith('/reviews/create') && method === 'POST':
+                    return createReview();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -61,6 +72,50 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return ok();
         }
 
+
+        function getUsers() {
+            if (!isLoggedIn()) {
+                return unauthorized();
+            }
+            return ok(users);
+        }
+
+        function deleteUser() {
+            if (!isLoggedIn()) {
+                return unauthorized();
+            }
+
+            users = users.filter(x => x.id !== idFromUrl());
+            localStorage.setItem('users', JSON.stringify(users));
+            return ok();
+        }
+
+
+        function getReviews() {
+            // if (!isLoggedIn()) {
+            //     return unauthorized();
+            // }
+            return ok(reviews);
+        }
+
+        function createReview() {
+            if (!isLoggedIn()) {
+                return unauthorized();
+            }
+
+            const review = body;
+
+            // if (users.find(x => x.username === user.username)) {
+            //     return error('Username "' + user.username + '" is already taken');
+            // }
+
+            review.id = reviews.length ? Math.max(...reviews.map(x => x.id)) + 1 : 1;
+            reviews.push(review);
+            localStorage.setItem('reviews', JSON.stringify(reviews));
+
+            return ok();
+        }
+
         // helper functions
 
         // tslint:disable-next-line:no-shadowed-variable
@@ -70,6 +125,20 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function error(message) {
             return throwError({ error: { message } });
+        }
+
+        function unauthorized() {
+            return throwError({ status: 401, error: { message: 'Unauthorised' } });
+        }
+
+        function isLoggedIn() {
+            return headers.get('Authorization') === 'Bearer fake-jwt-token';
+        }
+
+        function idFromUrl() {
+            const urlParts = url.split('/');
+            // tslint:disable-next-line:radix
+            return parseInt(urlParts[urlParts.length - 1]);
         }
     }
 }

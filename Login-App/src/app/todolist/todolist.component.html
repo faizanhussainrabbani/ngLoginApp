@@ -1,0 +1,32 @@
+<div *ngIf="error" class="alert alert-danger">{{error}}</div>
+<div *ngIf="currentUser">
+    <form [formGroup]="postReviewForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="review">Post your Review:</label>
+            <textarea formControlName="review" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.review.errors }"></textarea>
+            <div *ngIf="submitted && f.review.errors" class="invalid-feedback">
+                <div *ngIf="f.review.errors.required">Review is required</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="rating">Rating</label>
+            <input type="text" formControlName="rating" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.rating.errors }" />
+            <div *ngIf="submitted && f.rating.errors" class="invalid-feedback">
+                <div *ngIf="f.rating.errors.required">Rating is required</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button [disabled]="loading" class="btn btn-primary">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Submit Review
+            </button>
+            <a routerLink="/review" class="btn btn-link">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<ul>
+    <li *ngFor="let review of reviews">
+       Review: {{review.review}} Rating: {{review.rating}}         
+    </li>
+</ul>

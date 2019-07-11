@@ -11,13 +11,15 @@ import { RegisterComponent } from './register/register.component';
 import {appRoutingModule} from './app.routing';
 import { fakeBackendProvider } from './_helpers';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
+import { TodolistComponent } from './todolist/todolist.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    TodolistComponent
   ],
   imports: [
     BrowserModule,
