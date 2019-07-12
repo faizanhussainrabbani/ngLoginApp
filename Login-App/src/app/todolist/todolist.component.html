@@ -20,13 +20,13 @@
                 <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                 Submit Review
             </button>
-            <a routerLink="/review" class="btn btn-link">Cancel</a>
+            <a routerLink="/" class="btn btn-link">Cancel</a>
         </div>
     </form>
 </div>
-
-<ul>
-    <li *ngFor="let review of reviews">
-       Review: {{review.review}} Rating: {{review.rating}}         
+<h2>Top Reviews</h2>
+<ul class="list-group">
+    <li class="list-group-item" *ngFor="let review of reviews">
+       Review: {{review.review}} <br> Rating: {{review.rating}}         
     </li>
 </ul>
