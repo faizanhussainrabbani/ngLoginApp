@@ -5,12 +5,13 @@
         Review: {{review.review}} <br> Rating: {{review.rating}} By: {{review.user}}
         </li>
     </ul>
+    <ngb-pagination
+        [(page)]="currentPage"
+        [pageSize]="itemsPerPage"
+        [collectionSize]="reviews.length" #numPages
+        (pageChange)="onPageChange(currentPage)"></ngb-pagination>
 </span>
-<ngb-pagination
-  [(page)]="currentPage"
-  [pageSize]="itemsPerPage"
-  [collectionSize]="reviews.length" #numPages
-  (pageChange)="onPageChange(currentPage)"></ngb-pagination>
+
 <ng-template #noReviewBlock>
     No reviews entered yet! <span *ngIf="!currentUser"><a routerLink="/login"> Click here</a> to login/register</span> 
 </ng-template>

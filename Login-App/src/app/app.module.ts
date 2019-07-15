@@ -13,7 +13,7 @@ import { fakeBackendProvider } from './_helpers';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { TodolistComponent } from './todolist/todolist.component';
 import { ReviewListComponent } from './review-list/review-list.component';
-import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +28,8 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
     appRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NgbPaginationModule
+    NgbPaginationModule,
+    NgbRatingModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
