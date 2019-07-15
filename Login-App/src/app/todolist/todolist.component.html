@@ -25,8 +25,13 @@
     </form>
 </div>
 <h2>Top Reviews</h2>
-<ul class="list-group">
-    <li class="list-group-item" *ngFor="let review of reviews">
-       Review: {{review.review}} <br> Rating: {{review.rating}}         
-    </li>
-</ul>
+<span *ngIf="reviews?.length > 0; else noReviewBlock">
+    <ul class="list-group">
+        <li class="list-group-item" *ngFor="let review of reviews">
+        Review: {{review.review}} <br> Rating: {{review.rating}} By: {{review.user}}
+        </li>
+    </ul>
+</span>
+<ng-template #noReviewBlock>
+        No reviews entered yet! <a routerLink="/login">Click here</a> to login/register
+</ng-template>

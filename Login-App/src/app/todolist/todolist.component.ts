@@ -31,7 +31,8 @@ export class TodolistComponent implements OnInit {
     this.loadAllReviews();
     this.postReviewForm = this.formBuilder.group({
       review: ['', Validators.required],
-      rating: ['', Validators.required]
+      rating: ['', Validators.required],
+      user: ''
   });
   }
   get f() { return this.postReviewForm.controls; }
@@ -49,7 +50,7 @@ export class TodolistComponent implements OnInit {
     if (this.postReviewForm.invalid) {
         return;
     }
-
+    this.postReviewForm.value.user = this.currentUser.firstName;
     this.loading = true;
     this.reviewService.createReview(this.postReviewForm.value)
         .pipe(first())
