@@ -6,7 +6,7 @@ Added Reviews:
 
 Reviews available, without login:
 
-![Alt text](/Login-App/images/4.JPG?raw=true)
+![Alt text](/Login-App/images/3.JPG?raw=true)
 
 Login:
 
@@ -14,4 +14,4 @@ Login:
 
 Register:
 
-![Alt text](/Login-App/images/3.JPG?raw=true)
+![Alt text](/Login-App/images/2.JPG?raw=true)
