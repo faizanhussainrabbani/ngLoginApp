@@ -9,6 +9,9 @@ import { first } from 'rxjs/operators';
 export class ReviewListComponent implements OnInit {
   reviews = [];
   currentUser: any;
+  currentPage = 1;
+  itemsPerPage = 3;
+  pageSize: number;
   constructor(
     private authenticationService: AuthenticationService,
     private reviewService: ReviewService) {
@@ -22,5 +25,13 @@ export class ReviewListComponent implements OnInit {
     this.reviewService.getAllReviews()
         .pipe(first())
         .subscribe(reviews => this.reviews = reviews);
+  }
+
+  public onPageChange(pageNum: number): void {
+    this.pageSize = this.itemsPerPage * (pageNum - 1);
+  }
+
+  public changePagesize(num: number): void {
+  this.itemsPerPage = this.pageSize + num;
   }
 }
