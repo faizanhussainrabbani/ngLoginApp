@@ -28,7 +28,6 @@ export class TodolistComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.loadAllReviews();
     this.postReviewForm = this.formBuilder.group({
       review: ['', Validators.required],
       rating: ['', Validators.required],
@@ -36,12 +35,6 @@ export class TodolistComponent implements OnInit {
   });
   }
   get f() { return this.postReviewForm.controls; }
-
-  private loadAllReviews() {
-    this.reviewService.getAllReviews()
-        .pipe(first())
-        .subscribe(reviews => this.reviews = reviews);
-  }
 
   onSubmit() {
     this.submitted = true;

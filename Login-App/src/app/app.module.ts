@@ -12,6 +12,7 @@ import {appRoutingModule} from './app.routing';
 import { fakeBackendProvider } from './_helpers';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { TodolistComponent } from './todolist/todolist.component';
+import { ReviewListComponent } from './review-list/review-list.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { TodolistComponent } from './todolist/todolist.component';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    TodolistComponent
+    TodolistComponent,
+    ReviewListComponent
   ],
   imports: [
     BrowserModule,
